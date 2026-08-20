@@ -120,7 +120,6 @@ function App() {
     rightPanelWidth,
     compactEditorPanelHeightOverride,
     activePanel,
-    activePanels,
     activeLayoutDragItem,
     isSettingsOpen,
     setUI,
@@ -140,7 +139,6 @@ function App() {
       rightPanelWidth: state.rightPanelWidth,
       compactEditorPanelHeightOverride: state.compactEditorPanelHeightOverride,
       activePanel: state.activePanel,
-      activePanels: state.activePanels,
       activeLayoutDragItem: state.activeLayoutDragItem,
       isSettingsOpen: state.isSettingsOpen,
       setUI: state.setUI,
@@ -586,17 +584,6 @@ function App() {
       unlistenPromise.then((unlisten: any) => unlisten());
     };
   }, [setUI]);
-
-  useEffect(() => {
-    const visiblePanels = Object.values(activePanels);
-    const canvasToolIsVisible = visiblePanels.some(
-      (panel) => panel === Panel.Masks || panel === Panel.Ai || panel === Panel.Crop,
-    );
-
-    if (canvasToolIsVisible || !visiblePanels.includes(Panel.Adjustments)) {
-      setEditor({ isWbPickerActive: false });
-    }
-  }, [activePanels, setEditor]);
 
   const handlePanelSelect = useCallback(
     (panelId: Panel) => {
